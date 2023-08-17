@@ -6,10 +6,10 @@
 </template>
 
 <script setup>
-import { add, del } from '../server/lib/firestore';
+import { add, del, queryByCollection } from '../server/lib/firestore';
 const pages = ref();
 onMounted(async()=>{
-     console.log(await del("pages",'2fjmhuFZpRNSQoHrzNG5'));
+     pages.value = await queryByCollection("pages");
 })
 </script>
 
