@@ -19,7 +19,7 @@ export default defineNuxtPlugin(() => {
     appId: "1:1012841630853:web:7eb3017edff 275a79fadec",
     measurementId: "G-HBD3C84BZE"
   };
-  
+  //
   // Initialize Firebase
   const firebaseApp = initializeApp(firebaseConfig);
   // const analytics = getAnalytics(app);
