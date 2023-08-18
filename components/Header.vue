@@ -10,6 +10,10 @@ const pages = {
 
 <template>
   <div class="header">
+    <NuxtLink class="title" to="/">
+			查理的實用小工具V1.0
+		</NuxtLink>
+    <Mode class="mode"></Mode>
     <ul>
       <li v-for="page in pages"><NuxtLink class="bg-white dark:bg-slate-800 dark:text-white" :to="page.url">{{ page.chineseName }}</NuxtLink></li>
     </ul>
@@ -18,17 +22,20 @@ const pages = {
 
 <style lang="scss" scoped>
 .header{
-  position: absolute;
-  right: 0;
-  top: 0;
+  justify-content: space-between;
+  display: flex;
+  .mode{
+    align-self: center;
+  }
 }
 ul{
   display: flex;
 
   li{
+    display: block;
     box-sizing: border-box;
     width:10vw;
-    height: 4vw;
+    height: 100%;
     :hover{
       background-color: rgb(206, 190, 46);
     }
