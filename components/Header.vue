@@ -7,7 +7,7 @@ const pages = {
 }
 const firebaseUser = useFirebaseUser();
 const regex = /^([^@]+)@/;
-
+const showAuth = ref(false);
 </script>
 
 <template>
@@ -18,15 +18,21 @@ const regex = /^([^@]+)@/;
     <Mode class="mode"></Mode>
 
     <ul>
-      <div v-if="firebaseUser" class="log logged">
-      <button @click="signOutUser()" v-if="firebaseUser"><span>{{ firebaseUser.email.match(regex)[1] }}，登出</span></button>
 
-    </div>
       <li v-for="page in pages">
         <NuxtLink class="bg-white dark:bg-slate-800 dark:text-white" :to="page.url">{{ page.chineseName }}</NuxtLink>
       </li>
+      <li v-if="firebaseUser" class="log logged">
+        <button @click="signOutUser()"><span>{{ firebaseUser.email.match(regex)[1]
+        }}，登出</span></button>
+      </li>
+      <li v-if="!firebaseUser" class="log">
+        <button @click="showAuth=true"><span>登入</span></button>
+      </li>
     </ul>
+    <Auth v-if="showAuth" :pop="true" @show-auth="showAuth=false"></Auth>
   </div>
+
 </template>
 
 <style lang="scss" scoped>
@@ -45,20 +51,30 @@ const regex = /^([^@]+)@/;
 ul {
   display: flex;
   position: relative;
-  .log{
-    position: absolute;
-    left: -10vw;
-    top:50%;
-    transform: translateY(-50%);
-    span:hover {
-      text-decoration: underline;
-    }
-  }
+
+
+
   li {
     display: block;
     box-sizing: border-box;
     width: 10vw;
     height: 100%;
+
+    &.log {
+      display: flex;
+        align-items: center;
+        justify-content: center;
+
+      :hover {
+        background: none;
+      
+      }
+
+      span:hover {
+        text-decoration: underline;
+
+      }
+    }
 
     :hover {
       background-color: rgb(206, 190, 46);
