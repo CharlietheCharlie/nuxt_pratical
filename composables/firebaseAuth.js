@@ -8,25 +8,27 @@ import {
 
 export const createUser = async (email,password) => {
   const auth = getAuth();
-
+  const firebaseError = useFirebaseError();
   const credentials = await createUserWithEmailAndPassword(
     auth,
     email,
     password
   ).catch((error) => {
     // 註冊失敗
-    console.log(error.code);
+    firebaseError.value = error.code;
+    setTimeout(()=>{firebaseError.value = ""},3000);
   });
   return credentials;
 };
 
 export const signInUser = async (email,password) => {
   const auth = getAuth();
+  let firebaseError = useFirebaseError();
   const credentials = await signInWithEmailAndPassword(auth, email, password)
     .catch((error) => {
       // 登入失敗
-
-      console.log(error.code);
+      firebaseError.value = error.code
+      setTimeout(()=>{firebaseError.value = ""},3000);
 
     });
     return credentials;
@@ -53,6 +55,5 @@ export const initUser = async () => {
 export const signOutUser = async()=>{
   const auth = getAuth();
   const result = await auth.signOut();
-  console.log('signout: '+result);
 }
 
