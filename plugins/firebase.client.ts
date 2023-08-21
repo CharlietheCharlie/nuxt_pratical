@@ -1,6 +1,7 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
 import { getFirestore } from "firebase/firestore"
+import { getAuth } from "firebase/auth";
 
 // import { getAnalytics } from "firebase/analytics";
 // TODO: Add SDKs for Firebase products that you want to use
@@ -8,8 +9,7 @@ import { getFirestore } from "firebase/firestore"
 
 // Your web app's Firebase configuration
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
-export default defineNuxtPlugin(() => {
-  const config = useRuntimeConfig();
+export default defineNuxtPlugin((nuxtApp) => {
   const firebaseConfig = {
     apiKey: useRuntimeConfig().public.FIREBASE_API_KEY,
     authDomain: "nuxt-praticaltools.firebaseapp.com",
@@ -25,9 +25,12 @@ export default defineNuxtPlugin(() => {
   // const analytics = getAnalytics(app);
   initUser();
   const firestoreDb = getFirestore(firebaseApp);
+  const auth = getAuth();
+
+  nuxtApp.vueApp.provide('auth',auth);
   return{
     provide:{
-        firestoreDb
+        firestoreDb, auth
     }
   }
 })

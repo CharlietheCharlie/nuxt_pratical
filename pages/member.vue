@@ -1,6 +1,7 @@
 <template>
     <div class="member">
         <h1>Membership</h1>
+        <NuxtLink to="/secret">secret</NuxtLink>
         <div v-if="!firebaseUser" class="not-log">
             <form action="post">
                 <div>帳號<input placeholder="電子信箱" type="text" v-model="email"></div>
@@ -17,13 +18,13 @@
             <button @click="add($firestoreDb, 'data',{frontendValue:0},firebaseUser.uid)">加入</button>
         </div>
         <pre>{{ firebaseUser?.uid }}</pre>
-        <pre>{{ pages }}</pre>
-        
 
     </div>
 </template>
 
 <script setup>
+
+
 const { $firestoreDb } = useNuxtApp();
 const email = ref();
 const password = ref();

@@ -39,6 +39,7 @@ export const initUser = async () => {
   onAuthStateChanged(auth, (user) => {
     if (user) {
       // 已登入
+      
       console.log('sign in');
      
     } else {
