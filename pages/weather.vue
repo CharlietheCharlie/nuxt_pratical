@@ -1,33 +1,34 @@
 <template>
     <div class="weather">
         <h1>Weather</h1>
-        <select v-model="select" @change="search=select" name="locations" id="locations">
+        <select v-model="select" @change="search = select" name="locations" id="locations">
             <option disabled selected>請選擇縣市</option>
             <option v-for="location in locations" :value="location.locationName">{{ location.locationName }}</option>
         </select>
         <p>or</p>
         <div>搜尋:<input v-model="search" placeholder="輸入縣市名稱查詢" type="text"></div>
-        <div class="locations">
-            <div class="location" v-for="location in filteredLocations" v-if="search">
-            <div>
-                縣市:{{ location.name }}
-            </div>
-            <div>
-                日期:{{ location.date ? location.date.slice(0, 10) : "" }}
-            </div>
-            <div>
-                天氣概況:{{ location.description }}
-            </div>
-            <div>
-                氣溫:{{ location.minT }}&#176;C~
-                {{ location.maxT }}&#176;C
-            </div>
-            <div>
-                降雨機率:{{ location.rain }}%
+        <div class="locations flex flex-wrap justify-center gap-y-4">
+            <div class="location w-full" v-for="location in filteredLocations" v-if="search">
+                <a href="#"
+                    class="flex flex-col items-center bg-white border border-gray-200 rounded-lg shadow md:flex-row md:max-w-xl hover:bg-gray-100 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700">
+                    <img class="w-full rounded-t-lg h-60  md:h-100 md:w-48 md:m-2 md:rounded"
+                        :src="`/${photoSwitch(location.rain)}`" alt="">
+                    <div class="flex flex-col justify-between p-4 leading-normal">
+                        <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">縣市:{{ location.name
+                        }}</h5>
+                        <p class="mb-3 font-normal text-gray-700 dark:text-gray-400">日期:{{ location.date ?
+                            location.date.slice(0, 10) : "" }}</p>
+                        <p class="mb-3 font-normal text-gray-700 dark:text-gray-400"> 天氣概況:{{ location.description }}</p>
+                        <p class="mb-3 font-normal text-gray-700 dark:text-gray-400"> 氣溫:{{ location.minT }}&#176;C~
+                            {{ location.maxT }}&#176;C</p>
+                        <p class="mb-3 font-normal text-gray-700 dark:text-gray-400"> 氣溫:{{ location.minT }}&#176;C~
+                            {{ location.maxT }}&#176;C</p>
+                        <p class="mb-3 font-normal text-gray-700 dark:text-gray-400"> 降雨機率:{{ location.rain }}%</p>
+                    </div>
+                </a>
             </div>
         </div>
-        </div>
-      
+
 
     </div>
 </template>
@@ -54,6 +55,15 @@ const filteredLocations = computed(() => {
     })
     return formatedLocations;
 })
+const photoSwitch = (weather)=>{
+    let src ="";
+    if(weather>50){
+        src="rainy.jpg"
+    }else{
+        src="sunny.jpg"
+    }
+    return src;
+}
 
 </script>
 
@@ -77,17 +87,8 @@ const filteredLocations = computed(() => {
         padding-left: .5vw;
         margin-left: .5vw;
     }
-
     .locations{
-        width:100%;
-        display: flex;
-        justify-content:space-evenly;
-        flex-wrap: wrap;
-        gap: 3vw;
-        .location{
-            width: 40%;
-            min-width: 200px;
-        }
+        width: 100%;
     }
 
 }
